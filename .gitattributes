@@ -1,0 +1,21 @@
+## すべてのテキストファイルをLF改行に統一
+* text=auto eol=lf
+
+# バイナリファイルは自動変換しない
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary
+*.ico binary
+*.pdf binary
+*.mp4 binary
+*.mp3 binary
+*.wav binary
+*.zip binary
+*.exe binary
+*.dll binary
+
+# Windows用バッチファイルはCRLFを維持
+*.bat text eol=crlf
+*.cmd text eol=crlf
