@@ -1,8 +1,50 @@
 version: "3.8"
+
+volumes:
+  pgadmin_data:
+  postgres_data:
+
 services:
   web:
+    container_name: webapp-client
     build: ./client
     ports:
       - "58080:80"
     depends_on: []
-    container_name: webapp-client
+    networks:
+      - survey-net
+
+  pgadmin:
+    container_name: postgres-pgadmin
+    image: dpage/pgadmin4:9.11
+    ports:
+      - 58081:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: sample@sample.com
+      PGADMIN_DEFAULT_PASSWORD: samplepass
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - survey-net
+
+  postgres:
+    image: postgres:18
+    container_name: postgres
+    ports:
+      - 55432:5432
+    volumes:
+      - ./db/postgres/init.d:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql
+    environment:
+      POSTGRES_DB: surveydb
+      POSTGRES_USER: sampleuser
+      POSTGRES_PASSWORD: samplepass
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    networks:
+      - survey-net
+
+networks:
+  survey-net:
+    driver: bridge
