@@ -18,7 +18,7 @@
   <li>🗄️ <strong>pgAdmin4</strong> — DB管理ツール</li>
 </ul>
 
-### Docker
+### Docker commands
 
 - Build the containers
 
@@ -49,8 +49,11 @@ docker compose down -v --rmi all --remove-orphans
 - web app
   [http://localhost:58080](http://localhost:58080)
 
+- web api
+  [http://localhost:58081/docs](http://localhost:58081/docs)
+
 - pgadmin4
-  [http://localhost:58081](http://localhost:58081)
+  [http://localhost:58082](http://localhost:58082)
   - email: `sample@sample.com`
   - password: `samplepass`
 
@@ -60,3 +63,27 @@ docker compose down -v --rmi all --remove-orphans
   - Maintenance database :`surveydb`
   - Username: `sampleuser`
   - Password: `samplepass`
+
+### python インポートエラー対策
+
+```bash
+cd server/
+```
+
+- uv 仮想環境作成
+
+```bash
+uv init -p 3.11 .
+```
+
+- uv `requirements.txt`の読み込み
+
+```bash
+uv add -r requirements.txt
+```
+
+- uv `requirements.txt`の作成
+
+```bash
+uv pip freeze > requirements.txt
+```

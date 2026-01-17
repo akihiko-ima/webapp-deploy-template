@@ -14,11 +14,27 @@ services:
     networks:
       - survey-net
 
+  webapi:
+    container_name: webapp-api
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./server/app:/app/app # 開発時ホットリロード用
+    ports:
+      - "58081:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - postgres
+    networks:
+      - survey-net
+
   pgadmin:
     container_name: postgres-pgadmin
     image: dpage/pgadmin4:9.11
     ports:
-      - 58081:80
+      - 58082:80
     environment:
       PGADMIN_DEFAULT_EMAIL: sample@sample.com
       PGADMIN_DEFAULT_PASSWORD: samplepass
