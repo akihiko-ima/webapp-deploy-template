@@ -1,5 +1,3 @@
-version: "3.8"
-
 volumes:
   pgadmin_data:
   postgres_data:
@@ -20,7 +18,7 @@ services:
       context: ./server
       dockerfile: Dockerfile.dev
     volumes:
-      - ./server/app:/app/app # 開発時ホットリロード用
+      - ./server/src:/app/src # 開発時ホットリロード用
     ports:
       - "58081:8000"
     environment:
@@ -49,7 +47,7 @@ services:
     image: postgres:18
     container_name: postgres
     ports:
-      - 55432:5432
+      - 58083:5432
     volumes:
       - ./db/postgres/init.d:/docker-entrypoint-initdb.d
       - postgres_data:/var/lib/postgresql

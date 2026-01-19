@@ -87,3 +87,9 @@ uv add -r requirements.txt
 ```bash
 uv pip freeze > requirements.txt
 ```
+
+- uv でweb apiの実行
+
+```bash
+uv run fastapi dev src/main.py
+```
