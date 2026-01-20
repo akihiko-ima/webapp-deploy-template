@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, status
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from db import get_db_session
@@ -9,7 +9,7 @@ router = APIRouter(tags=["Survey"], prefix="/surveys")
 
 
 # 新規登録のエンドポイント
-@router.post("/")
+@router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_survey(
     survey: survey_schema.SurveyCreate, db: AsyncSession = Depends(get_db_session)
 ):
@@ -18,18 +18,23 @@ async def create_survey(
         return {"message": "Survey created successfully"}
     except Exception as e:
         await db.rollback()
-        raise HTTPException(status_code=500, detail=str(e))
+        # ユニーク制約違反の場合は409で返す
+        if "duplicate key value violates unique constraint" in str(e):
+            raise HTTPException(
+                status_code=409, detail="このメールアドレスは既に登録されています。"
+            )
+        raise HTTPException(status_code=500, detail="サーバーエラーが発生しました。")
 
 
 # 全件取得のエンドポイント
-@router.get("/")
+@router.get("/", status_code=status.HTTP_200_OK)
 async def get_surveys(db: AsyncSession = Depends(get_db_session)):
     surveys = await survey_crud.get_surveys(db)
     return surveys
 
 
 # 1件取得のエンドポイント
-@router.get("/{survey_id}")
+@router.get("/{survey_id}", status_code=status.HTTP_200_OK)
 async def get_survey(survey_id: int, db: AsyncSession = Depends(get_db_session)):
     survey = await survey_crud.get_survey(db, survey_id)
     if not survey:

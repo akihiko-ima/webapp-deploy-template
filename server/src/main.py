@@ -20,4 +20,4 @@ app.include_router(survey_router)
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello, FastAPI!"}
+    return {"message": "Hello, servery app!"}

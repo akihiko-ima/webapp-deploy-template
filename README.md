@@ -91,5 +91,5 @@ uv pip freeze > requirements.txt
 - uv でweb apiの実行
 
 ```bash
-uv run fastapi dev src/main.py
+uv run fastapi dev src/main.py --host 0.0.0.0
 ```
