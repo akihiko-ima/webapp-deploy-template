@@ -9,9 +9,15 @@
   <li>🔗 <strong>React Router DOM</strong> — ルーティング</li>
   <li>🌈 <strong>Tailwind CSS</strong> — ユーティリティファーストCSSフレームワーク</li>
   <li>✨ <strong>ShadCN UI</strong> — UIコンポーネント</li>
+  <li>📝 <strong>React Hook Form</strong> — フォーム管理</li>
+  <li>🔗 <strong>Axios</strong> — HTTPクライアント</li>
   <li>🖼️ <strong>Material Icons</strong> — アイコンフォント</li>
   <li>🎛️ <strong>Radix UI</strong> — アクセシブルなUIプリミティブ</li>
   <li>🦁 <strong>Lucide Icons</strong> — アイコンセット</li>
+  <li>🐍 <strong>FastAPI</strong> — バックエンドAPIフレームワーク</li>
+  <li>🗃️ <strong>SQLModel</strong> — DB ORM</li>
+  <li>⚡ <strong>Uvicorn</strong> — ASGIサーバー</li>
+  <li>🔑 <strong>python-dotenv</strong> — 環境変数管理</li>
   <li>🐳 <strong>Docker</strong> — コンテナ管理</li>
   <li>🌐 <strong>Nginx</strong> — Webサーバ</li>
   <li>🐘 <strong>PostgreSQL</strong> — データベース</li>
