@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { surveysApi } from "@/api/surveys";
 
 export default function Survey() {
   const [name, setName] = useState("");
@@ -19,9 +20,15 @@ export default function Survey() {
   const [color, setColor] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    const data = { name, age, gender, email, color };
-    navigate("/result", { state: data });
+  const handleSubmit = async () => {
+    const data = { name, age: Number(age), gender, email, color };
+    try {
+      await surveysApi.create(data);
+      navigate("/result", { state: data });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      alert("送信に失敗しました");
+    }
   };
 
   return (
@@ -47,6 +54,7 @@ export default function Survey() {
               年齢
             </label>
             <Input
+              type="number"
               placeholder="年齢を入力"
               value={age}
               onChange={(e) => setAge(e.target.value)}
