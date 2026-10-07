@@ -57,18 +57,31 @@ docker compose down -v --rmi all --remove-orphans
 
 - web api
   [http://localhost:58081/docs](http://localhost:58081/docs)
+  - フロントからは `/api/*` で呼び出す（nginx がリバースプロキシ。`npm run dev` 時は Vite が `http://localhost:58081` へプロキシ）
+  - `server/src` は volume マウントされており、変更はホットリロードされる
 
 - pgadmin4
   [http://localhost:58082](http://localhost:58082)
   - email: `sample@sample.com`
   - password: `samplepass`
 
-- postgres 接続設定
-  - Host name/address: `postgres`
-  - Port: `5432`
-  - Maintenance database :`surveydb`
-  - Username: `sampleuser`
-  - Password: `samplepass`
+### PostgreSQL 接続情報
+
+接続元によって Host / Port が異なる点に注意。
+
+| 項目 | pgAdmin から（コンテナ内） | ホスト PC から（DBeaver, psql など） |
+| --- | --- | --- |
+| Host name/address | `postgres` | `localhost` |
+| Port | `5432` | `58083` |
+| Database | `surveydb` | `surveydb` |
+| Username | `sampleuser` | `sampleuser` |
+| Password | `samplepass` | `samplepass` |
+
+- pgAdmin では「Register → Server」を開き、General タブの Name に任意の名前（例: `surveydb`）、Connection タブに上記を入力する
+- pgAdmin はコンテナ内から接続するため、Host は `localhost` ではなくサービス名の `postgres` を指定する
+- psql の例: `psql -h localhost -p 58083 -U sampleuser -d surveydb`
+- `api_user` / `api_pass` は web api 用ユーザー（SELECT / INSERT / UPDATE / DELETE のみ）。管理作業には `sampleuser` を使う
+- 接続情報は `docker-compose.yml`、`db/postgres/init.d/01_create_api_user.sql`、`server/.env` で定義している
 
 ### python インポートエラー対策
 

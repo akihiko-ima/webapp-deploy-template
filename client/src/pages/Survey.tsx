@@ -48,6 +48,16 @@ export default function Survey() {
           });
           return;
         }
+        if (err.response?.status === 422) {
+          // FastAPIのバリデーションエラーを該当フィールドに表示
+          const details: { loc: string[]; msg: string }[] =
+            err.response.data.detail ?? [];
+          details.forEach(({ loc, msg }) => {
+            const field = loc[loc.length - 1] as keyof FormValues;
+            setError(field, { type: "server", message: msg });
+          });
+          if (details.length > 0) return;
+        }
       }
       alert("送信に失敗しました");
     }
@@ -76,6 +86,8 @@ export default function Survey() {
               {...register("age", {
                 required: "必須です",
                 valueAsNumber: true,
+                min: { value: 0, message: "0〜120で入力してください" },
+                max: { value: 120, message: "0〜120で入力してください" },
               })}
             />
             {errors.age && <p className="text-red-500">{errors.age.message}</p>}

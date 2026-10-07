@@ -9,7 +9,7 @@ router = APIRouter(tags=["Survey"], prefix="/surveys")
 
 
 # 新規登録のエンドポイント
-@router.post("/", status_code=status.HTTP_201_CREATED)
+@router.post("", status_code=status.HTTP_201_CREATED)
 async def create_survey(
     survey: survey_schema.SurveyCreate, db: AsyncSession = Depends(get_db_session)
 ):
@@ -27,7 +27,7 @@ async def create_survey(
 
 
 # 全件取得のエンドポイント
-@router.get("/", status_code=status.HTTP_200_OK)
+@router.get("", status_code=status.HTTP_200_OK)
 async def get_surveys(db: AsyncSession = Depends(get_db_session)):
     surveys = await survey_crud.get_surveys(db)
     return surveys

@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const http = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  // nginx（本番）/ Vite dev server（開発）が /api を webapi へプロキシする
+  baseURL: "/api",
   timeout: 10000,
 });
 

@@ -8,7 +8,8 @@ services:
     build: ./client
     ports:
       - "58080:80"
-    depends_on: []
+    depends_on:
+      - webapi
     networks:
       - survey-net
 
@@ -30,7 +31,7 @@ services:
 
   pgadmin:
     container_name: postgres-pgadmin
-    image: dpage/pgadmin4:9.11
+    image: dpage/pgadmin4:9.18
     ports:
       - 58082:80
     environment:

@@ -1,8 +1,10 @@
 # ビルドステージ
 FROM node:22-alpine AS builder
 WORKDIR /app
-COPY . .
+# 依存関係のみ先にインストールしてレイヤーキャッシュを効かせる
+COPY package.json package-lock.json ./
 RUN npm ci
+COPY . .
 RUN npm run build
 
 # 本番サーバーステージ
